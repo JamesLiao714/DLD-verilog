@@ -10,6 +10,7 @@ module Adder_TB ();
   wire Cout1;
   wire Cout2;
   reg Cin;
+
   
   CLA_16bit CLA(A,B,Cin,CLA_s,Cout2);
   RCA_16bit RCA(A,B,Cin,RCA_s,Cout1);
@@ -50,12 +51,13 @@ endmodule
 
 
 //4-bit CLA 
-module CLA_4bit(S , Cout , A , B , Cin);
+module CLA_4bit(S , PP, GG , A , B , Cin);
   input [3:0]A;
   input [3:0]B; 
   input Cin;
-  output Cout; 
+  output PP, GG; 
   output[3:0]S;
+  wire Cout;
   wire [3:1]C;
   wire [0:3]P; 
   wire [0:3]G;
@@ -72,6 +74,7 @@ module CLA_4bit(S , Cout , A , B , Cin);
   xor #(20) p2(P[2] , A[2] , B[2]);
   xor #(20) p3(P[3] , A[3] , B[3]);
   
+  and #(25) pp(PP, P[3], P[2], P[1], P[0]);
   //C1
   wire tmp1;
   and #(10) c11(tmp1 , P[0] , Cin);
@@ -99,8 +102,10 @@ module CLA_4bit(S , Cout , A , B , Cin);
   and #(10) c42(tmp8 , P[3] , tmp4);
   and #(10) c43(tmp9 , P[3] , tmp5);
   and #(10) c44(tmp10 , P[3] , tmp6);
+
   or #(30) c45(Cout , tmp7 , tmp8 , tmp9 , tmp10 , G[3]);
-  
+  or #(20) gg(GG, tmp7, tmp8, tmp9, G[3]);
+
   /// Making Sums
   xor #(20) s0(S[0] , P[0] , Cin);
   xor #(20) s1(S[1] , P[1] , C[1]);
@@ -146,12 +151,16 @@ module CLA_16bit(A,B,Cin,S,Cout);
   input [15:0]B; 
   input Cin; 
   output [15:0]S; 
+  output [3:0]PP, GG;
   output Cout;   
   wire [3:1]C;
+  wire [3:0]temp;
+  wire temp1, temp2;
   
-  CLA_4bit F0_3 (S[3:0] , C[1] , A[3:0] , B[3:0] , Cin);
-  CLA_4bit F4_7 (S[7:4] , C[2] , A[7:4] , B[7:4] , C[1]);
-  CLA_4bit F8_11 (S[11:8] , C[3] , A[11:8] , B[11:8] , C[2]);
-  CLA_4bit F12_15 (S[15:12] , Cout , A[15:12] , B[15:12] , C[3]);
+  CLA_4bit oh(temp[3:0] , temp1, temp2, PP[3:0] , GG[3:0] , Cin);
+  CLA_4bit F0_3 (S[3:0] , PP[0], GG[0], A[3:0] , B[3:0] , Cin);
+  CLA_4bit F4_7 (S[7:4] , PP[1], GG[1], A[7:4] , B[7:4] , temp[0]);
+  CLA_4bit F8_11 (S[11:8], PP[2], GG[2], A[11:8] , B[11:8] , temp[1]);
+  CLA_4bit F12_15 (S[15:12] ,PP[3], GG[3], A[15:12] , B[15:12] , temp[2]);
   
 endmodule
