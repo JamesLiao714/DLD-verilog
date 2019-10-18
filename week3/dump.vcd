@@ -1,0 +1,99 @@
+$date
+	Fri Oct 18 13:35:30 2019
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	100ps
+$end
+$scope module alu_test $end
+$var wire 8 ! out [7:0] $end
+$var reg 8 " A [7:0] $end
+$var reg 8 # B [7:0] $end
+$var reg 3 $ OP [2:0] $end
+$scope module test $end
+$var wire 8 % Data_A [7:0] $end
+$var wire 8 & Data_B [7:0] $end
+$var wire 3 ' OP_Code [2:0] $end
+$var reg 8 ( Data_Out [7:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx (
+bx '
+bx &
+bx %
+bx $
+bx #
+bx "
+bx !
+$end
+#1000
+b0 !
+b0 (
+b0 $
+b0 '
+b0 #
+b0 &
+b0 "
+b0 %
+#7000
+b1 #
+b1 &
+b111 "
+b111 %
+#13000
+b1 !
+b1 (
+b1 $
+b1 '
+b11 "
+b11 %
+#19000
+b1011 !
+b1011 (
+b10 $
+b10 '
+b1011 "
+b1011 %
+#25000
+b10 !
+b10 (
+b11 $
+b11 '
+b11 "
+b11 %
+#31000
+b11101100 !
+b11101100 (
+b100 $
+b100 '
+b10011 "
+b10011 %
+#37000
+b11111011 !
+b11111011 (
+b101 $
+b101 '
+b1000 #
+b1000 &
+b11 "
+b11 %
+#43000
+b100 !
+b100 (
+b110 $
+b110 '
+b1 #
+b1 &
+#49000
+b11111111 !
+b11111111 (
+b111 $
+b111 '
+b10000 "
+b10000 %
+#90000
