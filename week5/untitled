@@ -1,0 +1,33 @@
+
+`timescale 1 ns/100ps
+//moore 
+
+module moore(in, rst_n);
+
+input in;
+input rst_n;
+
+
+
+
+
+always@(posedge clk or negedge rst_n)
+if (~rst_n)
+	curr_state <= #1 IDLE;
+else
+	curr_state <= #1 next_state;
+always @(curr_state or inp1) // next state logic
+case (curr_state)
+	IDLE : next_state = (inp1 == 1’b1) ? S0 : IDLE;
+	S0 : next_state = (inp1 == 1’b1) ? S1 : IDLE;
+	S1 : next_state = (inp1 == 1’b1) ? S1 : IDLE;
+	default : next_state = IDLE;
+endcase
+
+always @(curr_state) // output logic
+case (curr_state[1:0])
+	IDLE : outp = 1'b0;
+	S0 : outp = 1'b0;
+	S1 : outp = 1'b1;
+	default : outp = 1'b0;
+endcase
