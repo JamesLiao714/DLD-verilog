@@ -1,1 +1,2 @@
-hw for DLD
+HW for DLD
+verilog
