@@ -1,2 +1,3 @@
-HW for DLD
-verilog
+## HOMEWORK FOR DLD
+- verilog
+
